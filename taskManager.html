@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Task Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .task-form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #taskInput,
+        #dueDate {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #priority {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #addTaskBtn {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .task-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .task-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-btn {
+            padding: 5px 10px;
+            background-color: #ff4444;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <div class="task-form">
+            <input type="text" id="taskInput" placeholder="Enter a new task...">
+            <input type="date" id="dueDate">
+            <select id="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            <button id="addTaskBtn">Add Task</button>
+        </div>
+        <ul class="task-list" id="taskList">
+        </ul>
+    </div>
+    <script>
+        const taskInput = document.getElementById("taskInput");
+        const dueDateInput = document.getElementById("dueDate");
+        const priorityInput = document.getElementById("priority");
+        const addTaskBtn = document.getElementById("addTaskBtn");
+        const taskList = document.getElementById("taskList");
+
+        addTaskBtn.addEventListener("click", addTask);
+
+        function addTask() {
+            const taskText = taskInput.value.trim();
+            const dueDate = dueDateInput.value;
+            const priority = priorityInput.value;
+
+            if (taskText === "") return;
+
+            const taskItem = document.createElement("li");
+            taskItem.innerHTML = `
+        <div>
+            <h3>${taskText}</h3>
+            <p>Due Date: ${dueDate}</p>
+            <p>Priority: ${priority}</p>
+        </div>
+        <button class="delete-btn">Delete</button>
+    `;
+
+            taskList.appendChild(taskItem);
+
+            taskInput.value = "";
+            dueDateInput.value = "";
+            priorityInput.value = "low";
+
+            const deleteBtn = taskItem.querySelector(".delete-btn");
+            deleteBtn.addEventListener("click", () => {
+                taskList.removeChild(taskItem);
+            });
+        }
+
+    </script>
+</body>
+
+</html>
